@@ -186,6 +186,13 @@
                                                             Already mine
                                                         </td>
                                                     </c:if>
+
+                                                    <form action ="../deleteTeam" methode="post">
+                                                        <td>
+                                                            <input type="submit" value="Delete" style="background:url('../images/trash.png');">
+                                                            <input type="hidden" name="deletename" value="${teams.name}"/>
+                                                        </td>
+                                                    </form>
                                                 </c:if>
                                             </tr>
                                         </c:forEach>
