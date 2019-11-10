@@ -167,12 +167,25 @@
                                                 <td>${teams.location}</td>
                                                 <td>${teams.dateCreation}</td>
                                                 <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/allTeams'}">
-                                                <form action="../addingCoach" method="post">
-                                                    <td>
-                                                        <input type="submit" value="coach this team" name="addTeam">
-                                                        <input type="hidden" name="tname" value="${teams.name}"/>
-                                                    </td>
-                                                </form>
+                                                    <c:set var="refreshSent" value="false"/>
+                                                    <c:forEach items="${myTeams}" var="myteams">
+                                                            <c:if test="${myteams.name == teams.name}">
+                                                                <c:set var="refreshSent" value="true"/>
+                                                            </c:if>
+                                                    </c:forEach>
+                                                    <c:if test="${refreshSent == false}">
+                                                        <form action="../addingCoach" method="post">
+                                                            <td>
+                                                                <input type="submit" value="coach this team" name="addTeam">
+                                                                <input type="hidden" name="tname" value="${teams.name}"/>
+                                                            </td>
+                                                        </form>
+                                                    </c:if>
+                                                    <c:if test="${refreshSent == true}">
+                                                        <td>
+                                                            Already mine
+                                                        </td>
+                                                    </c:if>
                                                 </c:if>
                                             </tr>
                                         </c:forEach>

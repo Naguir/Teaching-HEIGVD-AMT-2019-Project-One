@@ -55,6 +55,7 @@ public class TablePlayerServlet extends HttpServlet {
             }
 
             if (path.equals("/tableTeamPage/allTeams")) {
+                request.setAttribute("myTeams",td.findMyTeam(coach.getUsername()));
                 request.setAttribute("teams", td.findAllTeam());
             }
 
