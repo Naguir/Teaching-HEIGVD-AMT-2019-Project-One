@@ -12,6 +12,8 @@ We have decided to develop a web application where we can manage football teams.
 
 We have three entities.. Teams, Coaches and Players.
 
+![](./doc/img/database.jpg)
+
 #### How we have implemented
 
 To implement this app, we have used the MVC pattern. Our application is splitted into tiers. We have the model tier where we have our classes. The presentation tier is where we have all our servlets. And the integration tier (DAO), where we implemented the methods that will communicate with our database.
