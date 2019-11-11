@@ -1,5 +1,6 @@
 package ch.heigvd.amt.projectone.presentation;
 
+import ch.heigvd.amt.projectone.DAO.IPlayerDAO;
 import ch.heigvd.amt.projectone.DAO.ITeamDAO;
 import ch.heigvd.amt.projectone.model.Coach;
 import ch.heigvd.amt.projectone.model.Team;
@@ -16,23 +17,36 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 
-@WebServlet(name = "DeleteServlet",urlPatterns = {"/deleteTeam"})
+@WebServlet(name = "DeleteServlet",urlPatterns = {"/deleteTeam","/deletePlayer"})
 public class DeleteServlet extends HttpServlet {
     @EJB
     ITeamDAO td;
 
+    @EJB
+    IPlayerDAO pd;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        String name = request.getParameter("deletename");
+        String id = request.getParameter("deletename");
+        String path = request.getServletPath();
 
-        System.out.println(name);
+        if(path.contains("/deleteTeam")){
+            td.deleteById(id);
+            response.getWriter().println("team deleted");
+            RequestDispatcher rd = request.getRequestDispatcher("../tableTeamPage/allTeams");
+            rd.forward(request, response);
+        }
 
-        td.deleteById(name);
+
+        if(path.contains("/deletePlayer")){
+            pd.deleteById(Integer.parseInt(id));
+            response.getWriter().println("player deleted");
+            RequestDispatcher rd = request.getRequestDispatcher("/tablePlayerPage/myPlayers");
+            rd.forward(request, response);
+        }
+
+        System.out.println(id);
 
 
-        response.getWriter().println("team deleted");
-        RequestDispatcher rd = request.getRequestDispatcher("../tableTeamPage/allTeams");
-        rd.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -59,32 +59,32 @@
                     </a>
                 </li>
                 <li>
-                    <a href="./tableTeamPage/myTeams">
+                    <a href="./tableTeamPage/myTeams?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My team List</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./tablePlayerPage/myPlayers">
+                    <a href="./tablePlayerPage/myPlayers?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My players List</p>
                     </a>
                 </li>
                     <li>
-                        <a href="./tableTeamPage/allTeams">
+                        <a href="./tableTeamPage/allTeams?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All teams List</p>
                         </a>
                     </li>
                 <c:if test = "${coach.isAdmin == true}">
                 <li>
-                        <a href="./tablePlayerPage/allPlayers">
+                        <a href="./tablePlayerPage/allPlayers?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All players List</p>
                         </a>
                     </li>
                     <li>
-                        <a href="./tableCoachPage">
+                        <a href="./tableCoachPage?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All coaches List</p>
                         </a>

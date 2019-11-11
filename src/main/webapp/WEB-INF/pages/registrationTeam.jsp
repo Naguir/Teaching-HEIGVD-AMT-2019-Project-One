@@ -30,6 +30,28 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet"/>
+    <style>
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            background-color: blue; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px
+        }
+
+    </style>
 </head>
 <body>
 
@@ -58,19 +80,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="./tableTeamPage/myTeams">
+                    <a href="./tableTeamPage/myTeams?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My team List</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./tablePlayerPage/myPlayers">
+                    <a href="./tablePlayerPage/myPlayers?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My players List</p>
                     </a>
                 </li>
                 <li>
-                        <a href="./tableTeamPage/allTeams">
+                        <a href="./tableTeamPage/allTeams?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All teams List</p>
                         </a>
@@ -78,13 +100,13 @@
                 <c:if test="${coach.isAdmin == true}">
 
                     <li>
-                        <a href="./tablePlayerPage/allPlayers">
+                        <a href="./tablePlayerPage/allPlayers?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All players List</p>
                         </a>
                     </li>
                     <li>
-                        <a href="./tableCoachPage">
+                        <a href="./tableCoachPage?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All coaches List</p>
                         </a>
@@ -145,11 +167,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+                            <c:choose>
+                            <c:when test="${requestScope['javax.servlet.forward.servlet_path'] == '/addingTeam'}">
                             <div class="header">
-                                <h4 class="title">Team(s)</h4>
+                            <h4 class="title">Team(s)</h4>
                             </div>
                             <div class="content table-responsive table-full-width">
-                                    <form action="./adding" method="post">
+                                    <form action="./addingTeam" method="post">
                                         <table style="with: 50%">
                                             <tr>
                                                 <td>Name</td>
@@ -164,8 +188,49 @@
                                                 <td><input type="text" name="location" /></td>
                                             </tr>
                                         </table>
-                                        <input type="submit" value="Add" onclick="showAlert()"/></form>
+                                        <input type="submit" value="Add"/></form>
                             </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="header">
+                                    <h4 class="title">Player(s)</h4>
+                                </div>
+                                <div class="content table-responsive table-full-width">
+                                    <form action="./addingPlayer" method="post">
+                                        <table style="with: 50%">
+                                            <tr>
+                                                <td>First Name</td>
+                                                <td><input type="text" name="fname" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Last Name</td>
+                                                <td><input type="text" name="lname" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Position</td>
+                                                <td><input type="text" name="position" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Number</td>
+                                                <td><input type="number" name="number" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Team</td>
+                                                <td>
+                                                    <select name="team">
+                                                        <c:forEach items="${teams}" var="teams">
+                                                        <option>
+                                                                ${teams.name}
+                                                        </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <input type="submit" value="Add"/></form>
+                                </div>
+                            </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

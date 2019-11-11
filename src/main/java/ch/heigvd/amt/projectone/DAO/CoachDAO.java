@@ -77,12 +77,16 @@ public class CoachDAO implements ICoachDAO {
     }
 
     @Override
-    public List<Coach> findAllCoach() {
+    public List<Coach> findAllCoach(int currentPage, int numOfRecords) {
         List<Coach> coaches = new ArrayList<>();
         Connection con = null;
+        int start = currentPage * numOfRecords - numOfRecords;
+
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("SELECT USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,ISADMIN FROM amt_coaches");
+            PreparedStatement statement = con.prepareStatement("SELECT USERNAME,PASSWORD,FIRST_NAME,LAST_NAME,ISADMIN FROM amt_coaches LIMIT ?,?");
+            statement.setInt(1,start);
+            statement.setInt(2,numOfRecords);
 
             ResultSet rs = statement.executeQuery();
             while(rs.next()) {
@@ -103,6 +107,29 @@ public class CoachDAO implements ICoachDAO {
             closeConnection(con);
         }
     }
+
+    public int getNumberOfRows(){
+        Connection con = null;
+
+        try {
+            con = dataSource.getConnection();
+            PreparedStatement statement = con.prepareStatement("SELECT COUNT(*) FROM amt_coaches");
+
+            ResultSet rs = statement.executeQuery();
+            boolean hasRecord = rs.next();
+            if (hasRecord) {
+                return rs.getInt(1);
+            }
+            return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Error(e);
+        } finally {
+            closeConnection(con);
+        }
+    }
+
 
     @Override
     public void update(Coach entity) {

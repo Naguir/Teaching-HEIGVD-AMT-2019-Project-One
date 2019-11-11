@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class Player {
 
+    int id;
     private String lastName;
     private String firstName;
     String position;

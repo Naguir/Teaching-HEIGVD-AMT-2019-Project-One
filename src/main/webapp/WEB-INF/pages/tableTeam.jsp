@@ -58,33 +58,33 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../tableTeamPage/myTeams">
+                    <a href="../tableTeamPage/myTeams?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My team List</p>
                     </a>
                 </li>
                 <li>
-                    <a href="../tablePlayerPage/myPlayers">
+                    <a href="../tablePlayerPage/myPlayers?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My players List</p>
                     </a>
                 </li>
 
                     <li>
-                        <a href="../tableTeamPage/allTeams">
+                        <a href="../tableTeamPage/allTeams?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All teams List</p>
                         </a>
                     </li>
                 <c:if test="${coach.isAdmin == true}">
                     <li>
-                        <a href="../tablePlayerPage/allPlayers">
+                        <a href="../tablePlayerPage/allPlayers?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All players List</p>
                         </a>
                     </li>
                     <li>
-                        <a href="../tableCoachPage">
+                        <a href="../tableCoachPage?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All coaches List</p>
                         </a>
@@ -148,7 +148,7 @@
                             <div class="header">
                                 <h4 class="title">Team(s)</h4>
                                 <c:if test="${coach.isAdmin == true}">
-                                    <p><a href="../adding">Add a Team</a></p>
+                                    <p><a href="../addingTeam">Add a Team</a></p>
                                 </c:if>
 
                             </div>
@@ -205,9 +205,54 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <ul class="pagination">
+                        <c:if test="${currentPage != 1}">
+                            <li class="page-item">
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/allTeams'}">
+                                    <a class="page-link" href="../tableTeamPage/allTeams?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                </c:if>
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/myTeams'}">
+                                    <a class="page-link" href="../tableTeamPage/myTeams?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                </c:if>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="1" end="${noOfPages}" var="i">
+                            <c:choose>
+                                <c:when test="${currentPage eq i}">
+                                    <li class="page-item active"><a class="page-link">
+                                            ${i} <span class="sr-only">(current)</span></a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/allTeams'}">
+                                            <a class="page-link" href="../tableTeamPage/allTeams?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                        </c:if>
+                                        <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/myTeams'}">
+                                            <a class="page-link" href="../tableTeamPage/myTeams?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                        </c:if>
+
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+
+                        <c:if test="${currentPage lt noOfPages}">
+                            <li class="page-item">
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/allTeams'}">
+                                    <a class="page-link" href="../tableTeamPage/allTeams?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                </c:if>
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tableTeamPage/myTeams'}">
+                                    <a class="page-link" href="../tableTeamPage/myTeams?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                </c:if>
+                            </li>
+                        </c:if>
+                    </ul>
+                </div>
             </div>
         </div>
-
         <footer class="footer">
             <div class="container-fluid">
                 <p class="copyright pull-right">

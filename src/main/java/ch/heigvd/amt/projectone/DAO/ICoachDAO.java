@@ -6,6 +6,7 @@ import java.util.List;
 
 @Local
 public interface ICoachDAO extends IDAO<String, Coach>  {
-    List<Coach> findAllCoach();
+    List<Coach> findAllCoach(int currentPage, int numOfRecords);
+    public int getNumberOfRows();
 
 }

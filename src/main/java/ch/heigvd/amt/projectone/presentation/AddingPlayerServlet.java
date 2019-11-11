@@ -1,7 +1,9 @@
 package ch.heigvd.amt.projectone.presentation;
 
+import ch.heigvd.amt.projectone.DAO.IPlayerDAO;
 import ch.heigvd.amt.projectone.DAO.ITeamDAO;
 import ch.heigvd.amt.projectone.model.Coach;
+import ch.heigvd.amt.projectone.model.Player;
 import ch.heigvd.amt.projectone.model.Team;
 
 import javax.ejb.DuplicateKeyException;
@@ -17,30 +19,34 @@ import java.io.PrintWriter;
 import java.sql.Date;
 
 
-@WebServlet(name = "AddingServlet", urlPatterns = {"/adding"})
-public class AddingServlet extends HttpServlet {
+@WebServlet(name = "AddingPlayerServlet", urlPatterns = {"/addingPlayer"})
+public class AddingPlayerServlet extends HttpServlet {
+    @EJB
+    IPlayerDAO pd;
     @EJB
     ITeamDAO td;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Coach coach = (Coach) request.getSession().getAttribute("coach");
-        request.setAttribute("coach", coach);
-
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
-        String name =request.getParameter("name");
-        Date creationDate  = Date.valueOf(request.getParameter("creationDate"));
-        String location  =request.getParameter("location");
+        String fname =request.getParameter("fname");
+        String lname  = request.getParameter("lname");
+        String position  =request.getParameter("position");
+        int number  =Integer.parseInt(request.getParameter("number"));
+        String team  =request.getParameter("team");
+        Team t = td.findById(team);
 
-
-        Team t = Team.builder().name(name)
-                .dateCreation(creationDate)
-                .location(location)
+        Player p = Player.builder()
+                .firstName(fname)
+                .lastName(lname)
+                .position(position)
+                .number(number)
+                .team(t)
                 .build();
 
+
         try {
-            td.create(t);
-            response.getWriter().println("team created");
+            pd.create(p);
+            response.getWriter().println("player created");
             RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/pages/registrationTeam.jsp");
             rd.forward(request,response);
         } catch (DuplicateKeyException e) {
@@ -49,6 +55,9 @@ public class AddingServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Coach coach = (Coach) request.getSession().getAttribute("coach");
+        request.setAttribute("coach", coach);
+        request.setAttribute("teams", td.findMyTeamByCoach(coach.getUsername()));
         request.getRequestDispatcher("/WEB-INF/pages/registrationTeam.jsp").forward(request, response);
     }
 }

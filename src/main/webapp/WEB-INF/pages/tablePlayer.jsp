@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,6 +31,9 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -58,19 +62,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../tableTeamPage/myTeams">
+                    <a href="../tableTeamPage/myTeams?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My team List</p>
                     </a>
                 </li>
                 <li>
-                    <a href="../tablePlayerPage/myPlayers">
+                    <a href="../tablePlayerPage/myPlayers?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My players List</p>
                     </a>
                 </li>
                     <li>
-                        <a href="../tableTeamPage/allTeams">
+                        <a href="../tableTeamPage/allTeams?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All teams List</p>
                         </a>
@@ -78,13 +82,13 @@
                 <c:if test="${coach.isAdmin == true}">
 
                 <li>
-                        <a href="../tablePlayerPage/allPlayers">
+                        <a href="../tablePlayerPage/allPlayers?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All players List</p>
                         </a>
                     </li>
                     <li>
-                        <a href="../tableCoachPage">
+                        <a href="../tableCoachPage?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All coaches List</p>
                         </a>
@@ -147,7 +151,7 @@
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">Players</h4>
-                                <p><a href="../adding">Add a player</a></p>
+                                <p><a href="../addingPlayer">Add a player</a></p>
                             </div>
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
@@ -156,6 +160,7 @@
                                     <th>Last Name</th>
                                     <th>Position</th>
                                     <th>Number</th>
+                                    <th>Team</th>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${players}" var="players">
@@ -164,6 +169,13 @@
                                             <td>${players.lastName}</td>
                                             <td>${players.position}</td>
                                             <td>${players.number}</td>
+                                            <td>${players.team.getName()}</td>
+                                            <form action ="../deletePlayer" methode="post">
+                                                <td>
+                                                    <input type="submit" value="Delete" style="background:url('../images/trash.png');">
+                                                    <input type="hidden" name="deletename" value="${players.id}"/>
+                                                </td>
+                                            </form>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -171,6 +183,52 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <ul class="pagination">
+                        <c:if test="${currentPage != 1}">
+                            <li class="page-item">
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tablePlayerPage/allPlayers'}">
+                                    <a class="page-link" href="../tablePlayerPage/allPlayers?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                </c:if>
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tablePlayerPage/myPlayers'}">
+                                    <a class="page-link" href="../tablePlayerPage/myPlayers?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                </c:if>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="1" end="${noOfPages}" var="i">
+                            <c:choose>
+                                <c:when test="${currentPage eq i}">
+                                    <li class="page-item active"><a class="page-link">
+                                            ${i} <span class="sr-only">(current)</span></a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tablePlayerPage/allPlayers'}">
+                                            <a class="page-link" href="../tablePlayerPage/allPlayers?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                        </c:if>
+                                        <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tablePlayerPage/myPlayers'}">
+                                            <a class="page-link" href="../tablePlayerPage/myPlayers?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                        </c:if>
+
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+
+                        <c:if test="${currentPage lt noOfPages}">
+                            <li class="page-item">
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tablePlayerPage/allPlayers'}">
+                                    <a class="page-link" href="../tablePlayerPage/allPlayers?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                </c:if>
+                                <c:if test="${requestScope['javax.servlet.forward.servlet_path'] == '/tablePlayerPage/myPlayers'}">
+                                    <a class="page-link" href="../tablePlayerPage/myPlayers?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                </c:if>
+                            </li>
+                        </c:if>
+                    </ul>
                 </div>
             </div>
         </div>

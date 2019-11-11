@@ -5,6 +5,7 @@ import ch.heigvd.amt.projectone.DAO.IPlayerDAO;
 import ch.heigvd.amt.projectone.DAO.ITeamDAO;
 import ch.heigvd.amt.projectone.model.Coach;
 import ch.heigvd.amt.projectone.model.Player;
+import ch.heigvd.amt.projectone.model.Team;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "TablePlayerServlet", urlPatterns = {"/tablePlayerPage/allPlayers","/tablePlayerPage/myPlayers","/tableTeamPage/myTeams","/tableTeamPage/allTeams","/tableCoachPage"})
 public class TablePlayerServlet extends HttpServlet {
@@ -35,37 +37,80 @@ public class TablePlayerServlet extends HttpServlet {
         System.out.println(request.getServletPath());
         String path = request.getServletPath();
         request.setAttribute("coach", coach);
-
+        int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        int recordsPerPage = 10;
+        int rows = 0;
+        int nOfPages =0;
 
         if(path.contains("/tablePlayerPage/")) {
+
+
+            List<Player> allPlayers = pd.findPlayers(currentPage,recordsPerPage);
+            List<Player> myPlayers = pd.findMyTeamPlayers(currentPage,recordsPerPage,coach);
+
+
             if (path.equals("/tablePlayerPage/myPlayers")) {
-                request.setAttribute("players", pd.findMyTeamPlayers(coach));
+                System.out.println(path);
+                rows = pd.getNumberOfRowsForMyTeam(coach);
+                request.setAttribute("players", myPlayers);
             }
 
             if (path.equals("/tablePlayerPage/allPlayers")) {
-                request.setAttribute("players", pd.findAllPlayers());
+                rows = pd.getNumberOfRows();
+                request.setAttribute("players", allPlayers);
             }
+
+            nOfPages = rows / recordsPerPage;
+            if (nOfPages % recordsPerPage > 0) {
+                nOfPages++;
+            }
+            request.setAttribute("noOfPages", nOfPages);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
 
             request.getRequestDispatcher("/WEB-INF/pages/tablePlayer.jsp").forward(request, response);
         }
 
         if(path.contains("/tableTeamPage/")) {
+            List<Team> allTeam = td.findAllTeam(currentPage,recordsPerPage);
+            List<Team> myTeam = td.findMyTeam(currentPage,recordsPerPage,coach.getUsername());
+
             if (path.equals("/tableTeamPage/myTeams")) {
-                request.setAttribute("teams", td.findMyTeam(coach.getUsername()));
+                rows = td.getNumberOfRowsForMyTeam(coach.getUsername());
+                request.setAttribute("teams", myTeam);
             }
 
             if (path.equals("/tableTeamPage/allTeams")) {
-                request.setAttribute("myTeams",td.findMyTeam(coach.getUsername()));
-                request.setAttribute("teams", td.findAllTeam());
+                rows = td.getNumberOfRows();
+                request.setAttribute("myTeams",myTeam);
+                request.setAttribute("teams", allTeam);
             }
+
+            nOfPages = rows / recordsPerPage;
+            if (nOfPages % recordsPerPage > 0) {
+                nOfPages++;
+            }
+            request.setAttribute("noOfPages", nOfPages);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
 
             request.getRequestDispatcher("/WEB-INF/pages/tableTeam.jsp").forward(request, response);
         }
 
         if(path.equals("/tableCoachPage")) {
-                request.setAttribute("coaches", cd.findAllCoach());
+            List<Coach> allCoach = cd.findAllCoach(currentPage,recordsPerPage);
+            request.setAttribute("coaches", allCoach);
 
-                request.getRequestDispatcher("/WEB-INF/pages/tableCoach.jsp").forward(request, response);
+            rows = td.getNumberOfRows();
+            nOfPages = rows / recordsPerPage;
+            if (nOfPages % recordsPerPage > 0) {
+                nOfPages++;
+            }
+            request.setAttribute("noOfPages", nOfPages);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
+
+            request.getRequestDispatcher("/WEB-INF/pages/tableCoach.jsp").forward(request, response);
         }
 
     }
