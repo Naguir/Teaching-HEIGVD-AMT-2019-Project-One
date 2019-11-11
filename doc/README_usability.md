@@ -44,5 +44,7 @@ My players list shows the players you have of every team you coach. You can add 
 
 ![](./img/myplayers-list.png)
 
+If a coach have not a team attributed, he have to attribute himself the team he want to coach using the button (coach this team) : 
 
+![](./img/allteams-list.png)
 
