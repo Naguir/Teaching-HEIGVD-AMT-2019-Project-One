@@ -7,7 +7,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Football Management</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -35,7 +35,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="purple" data-image="assets/img/background-image2.jpg">
 
     <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
 
@@ -46,45 +46,45 @@
             </div>
 
             <ul class="nav">
-                <li class="active">
+                <li>
                     <a href="./loginpage">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="./coachProfile">
                         <i class="pe-7s-user"></i>
                         <p>Coach Profile</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./tableTeamPage/myTeams">
+                    <a href="./tableTeamPage/myTeams?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My team List</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./tablePlayerPage/myPlayers">
+                    <a href="./tablePlayerPage/myPlayers?currentPage=1">
                         <i class="pe-7s-note2"></i>
                         <p>My players List</p>
                     </a>
                 </li>
                     <li>
-                        <a href="./tableTeamPage/allTeams">
+                        <a href="./tableTeamPage/allTeams?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All teams List</p>
                         </a>
                     </li>
                 <c:if test = "${coach.isAdmin == true}">
                 <li>
-                        <a href="./tablePlayerPage/allPlayers">
+                        <a href="./tablePlayerPage/allPlayers?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All players List</p>
                         </a>
                     </li>
                     <li>
-                        <a href="./tableCoachPage">
+                        <a href="./tableCoachPage?currentPage=1">
                             <i class="pe-7s-note2"></i>
                             <p>All coaches List</p>
                         </a>
@@ -98,30 +98,9 @@
 		<nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">User</a>
+                    <a class="navbar-brand" href="#">Coach Profile</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-								<p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul>
-
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="">
@@ -149,18 +128,18 @@
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form action="./coachProfile" method="post">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input type="text" class="form-control" placeholder="Username" value="${coach.username}">
+                                                <input type="text" name="uname" class="form-control" placeholder="Username" value="${coach.username}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Password</label>
-                                                <input type="text" class="form-control" placeholder="Password" value="${coach.password}">
+                                                <input type="text" name="pass" class="form-control" placeholder="Password" value="${coach.password}">
                                             </div>
                                         </div>
                                     </div>
@@ -169,34 +148,26 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="First Name" value="${coach.firstName}">
+                                                <input type="text" name="fname" class="form-control" placeholder="First Name" value="${coach.firstName}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control" placeholder="Last Name" value="${coach.lastName}">
+                                                <input type="text" name="lname" class="form-control" placeholder="Last Name" value="${coach.lastName}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Team</label>
-                                                <select name="teamOption">
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
                                                 <label>Admin</label>
                                                 <c:choose>
                                                     <c:when test = "${coach.isAdmin == false}">
-                                                        <input type="checkbox" disabled>
+                                                        <input name="isAdmin" type="checkbox" disabled>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <input type="checkbox" checked>
+                                                        <input name="isAdmin" type="checkbox" checked disabled>
                                                     </c:otherwise>
                                                 </c:choose>
 
@@ -213,12 +184,12 @@
                     <div class="col-md-4">
                         <div class="card card-user">
                             <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                <img src="assets/img/profilePhoto.jpg" alt="..."/>
                             </div>
                             <div class="content">
                                 <div class="author">
                                      <a href="#">
-                                    <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..."/>
+                                    <img class="avatar border-gray" src="assets/img/faces/avatar.png" alt="..."/>
 
                                       <h4 class="title">${coach.firstName} ${coach.lastName}<br />
                                          <small>${coach.username}</small>
@@ -230,10 +201,7 @@
                             </div>
                             <hr>
                             <div class="text-center">
-                                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
-                                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
-                                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
-
+                                <button href="https://www.github.com/Naguir/Teaching-HEIGVD-AMT-2019-Project-One" class="btn btn-simple"><i class="fa fa-github"></i> </button>
                             </div>
                         </div>
                     </div>

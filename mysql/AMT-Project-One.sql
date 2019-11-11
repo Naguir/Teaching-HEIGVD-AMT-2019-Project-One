@@ -43,18 +43,17 @@ CREATE TABLE IF NOT EXISTS `amt_teams_coach` (
   CONSTRAINT `fk_coach_team_coach`
     FOREIGN KEY (`coach_id`)
     REFERENCES `amt_coaches` (`username`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_coach_team_team`
     FOREIGN KEY (`team_id`)
     REFERENCES `amt_teams` (`name`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    )
 ENGINE = InnoDB;
 
 
 ALTER TABLE amt_players ADD CONSTRAINT FK_player_team
-  FOREIGN KEY (name_teams) REFERENCES amt_teams (name);
+  FOREIGN KEY (name_teams) REFERENCES amt_teams (name) ON DELETE CASCADE;
 
 INSERT INTO amt_teams VALUES ("HEIG", "2019-10-30", "Yverdon");
 INSERT INTO amt_teams VALUES ("Bosna", "2013-10-30", "Neuchatel");

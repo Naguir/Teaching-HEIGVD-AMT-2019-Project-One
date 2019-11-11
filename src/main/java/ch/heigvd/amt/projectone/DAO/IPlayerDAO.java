@@ -9,7 +9,9 @@ import java.util.List;
 
 @Local
 public interface IPlayerDAO extends IDAO<Integer, Player>  {
-    List<Player> findAllPlayers();
-    List<Player> findMyTeamPlayers(Coach coach);
+    public List<Player> findMyTeamPlayers(int currentPage, int recordsPerPage,Coach coach);
+    public List<Player> findPlayers(int currentPage, int numOfRecords);
+    public int getNumberOfRows();
+    public int getNumberOfRowsForMyTeam(Coach coach);
 
 }

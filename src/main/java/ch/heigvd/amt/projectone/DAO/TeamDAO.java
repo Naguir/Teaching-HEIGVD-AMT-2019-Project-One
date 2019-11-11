@@ -1,18 +1,12 @@
 package ch.heigvd.amt.projectone.DAO;
 
-import ch.heigvd.amt.projectone.business.IAuthentification;
-import ch.heigvd.amt.projectone.model.Coach;
 import ch.heigvd.amt.projectone.model.Team;
 
 import javax.annotation.Resource;
 import javax.ejb.DuplicateKeyException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,9 +82,40 @@ public class TeamDAO implements ITeamDAO {
     }
 
     @Override
-    public List<Team> findMyTeam(String coach) {
+    public List<Team> findMyTeam(int currentPage, int recordsPerPage, String coach) {
         List<Team> teams = new ArrayList<>();
         Connection con = null;
+        int start = currentPage * recordsPerPage - recordsPerPage;
+
+        try {
+            con = dataSource.getConnection();
+            PreparedStatement statement = con.prepareStatement("SELECT NAME, CREATIONDATE, LOCATION FROM amt_teams INNER JOIN amt_teams_coach ON amt_teams.name = amt_teams_coach.team_id WHERE amt_teams_coach.coach_id = ? LIMIT ?,?");
+            statement.setString(1, coach);
+            statement.setInt(2,start);
+            statement.setInt(3,recordsPerPage);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Team existingTeam = Team.builder()
+                        .name(rs.getString(1))
+                        .dateCreation(rs.getDate(2))
+                        .location(rs.getString(3))
+                        .build();
+                teams.add(existingTeam);
+            }
+            return teams;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Error(e);
+        } finally {
+            closeConnection(con);
+        }
+    }
+
+    @Override
+    public List<Team> findMyTeamByCoach(String coach) {
+        List<Team> teams = new ArrayList<>();
+        Connection con = null;
+
         try {
             con = dataSource.getConnection();
             PreparedStatement statement = con.prepareStatement("SELECT NAME, CREATIONDATE, LOCATION FROM amt_teams INNER JOIN amt_teams_coach ON amt_teams.name = amt_teams_coach.team_id WHERE amt_teams_coach.coach_id = ?");
@@ -114,13 +139,15 @@ public class TeamDAO implements ITeamDAO {
     }
 
     @Override
-    public List<Team> findAllTeam() {
+    public List<Team> findAllTeam(int currentPage, int numOfRecords) {
         List<Team> teams = new ArrayList<>();
         Connection con = null;
+        int start = currentPage * numOfRecords - numOfRecords;
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("SELECT NAME, CREATIONDATE, LOCATION FROM amt_teams");
-           // statement.setString(1, coach);
+            PreparedStatement statement = con.prepareStatement("SELECT NAME, CREATIONDATE, LOCATION FROM amt_teams LIMIT ?,?");
+            statement.setInt(1, start);
+            statement.setInt(2,numOfRecords);
             ResultSet rs = statement.executeQuery();
             while(rs.next()) {
                 Team existingTeam = Team.builder()
@@ -137,6 +164,53 @@ public class TeamDAO implements ITeamDAO {
         } finally {
             closeConnection(con);
         }
+    }
+
+    @Override
+    public int getNumberOfRows(){
+        Connection con = null;
+        try {
+            con = dataSource.getConnection();
+            PreparedStatement statement = con.prepareStatement("SELECT COUNT(*) FROM amt_teams");
+
+            ResultSet rs = statement.executeQuery();
+            boolean hasRecord = rs.next();
+            if (hasRecord) {
+                return rs.getInt(1);
+            }
+            return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Error(e);
+        } finally {
+            closeConnection(con);
+        }
+
+    }
+
+    @Override
+    public int getNumberOfRowsForMyTeam(String coach){
+        Connection con = null;
+
+        try {
+            con = dataSource.getConnection();
+            PreparedStatement statement = con.prepareStatement("SELECT COUNT(*) FROM amt_teams INNER JOIN amt_teams_coach ON amt_teams.name = amt_teams_coach.team_id WHERE amt_teams_coach.coach_id = ?");
+            statement.setString(1,coach);
+            ResultSet rs = statement.executeQuery();
+            boolean hasRecord = rs.next();
+            if (hasRecord) {
+                return rs.getInt(1);
+            }
+            return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Error(e);
+        } finally {
+            closeConnection(con);
+        }
+
     }
 
     @Override

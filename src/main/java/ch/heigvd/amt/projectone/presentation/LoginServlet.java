@@ -38,7 +38,6 @@ public class LoginServlet extends HttpServlet {
             if(ld.authentificate(username, pass)){
                 Coach coach = cd.findById(username);
                 request.getSession().setAttribute("coach",coach);
-                //response.sendRedirect(request.getContextPath() + "/");
                 RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/pages/dashboard.jsp");
                 rd.forward(request,response);
             }

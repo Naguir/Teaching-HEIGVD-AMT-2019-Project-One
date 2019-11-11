@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V9</title>
+	<title>Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -30,7 +30,7 @@
 <body>
 	
 	
-	<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+	<div class="container-login100" style="background-image: url('images/background-image.jpg');">
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
 			<form class="login100-form validate-form"  method="post" action="./loginpage">
 				<span class="login100-form-title p-b-37">
