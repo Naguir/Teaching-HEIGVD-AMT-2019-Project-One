@@ -24,7 +24,7 @@ public class AddingCoachServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         Coach coach = (Coach) request.getSession().getAttribute("coach");
-
+        String context = request.getContextPath();
         String name = request.getParameter("tname");
 
         System.out.println(name);
@@ -33,8 +33,7 @@ public class AddingCoachServlet extends HttpServlet {
 
 
         response.getWriter().println("coach train team");
-        RequestDispatcher rd = request.getRequestDispatcher("./tableTeamPage/myTeams");
-        rd.forward(request, response);
+        response.sendRedirect(context + "/tableTeamPage/myTeams?currentPage=1");
     }
 
 

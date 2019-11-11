@@ -136,15 +136,14 @@ public class CoachDAO implements ICoachDAO {
         Connection con = null;
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("UPDATE amt_coaches SET USERNAME=?, PASSWORD=?, FIRST_NAME=?, LAST_NAME=?, ISADMIN=? WHERE USERNAME = ?");
-            statement.setString(1, entity.getUsername());
-            statement.setString(2, entity.getPassword());
-            statement.setString(3, entity.getFirstName());
-            statement.setString(4, entity.getLastName());
-            statement.setBoolean(5, entity.getIsAdmin());
+            PreparedStatement statement = con.prepareStatement("UPDATE amt_coaches SET PASSWORD=?, FIRST_NAME=?, LAST_NAME=? WHERE USERNAME = ?");
+            statement.setString(1, entity.getPassword());
+            statement.setString(2, entity.getFirstName());
+            statement.setString(3, entity.getLastName());
+            statement.setString(4,entity.getUsername());
             int numberOfUpdatedUsers = statement.executeUpdate();
             if (numberOfUpdatedUsers != 1) {
-                // erreur
+                System.out.println("erreur");
             }
         } catch (SQLException e) {
             e.printStackTrace();

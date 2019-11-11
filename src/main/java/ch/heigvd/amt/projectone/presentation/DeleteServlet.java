@@ -1,5 +1,6 @@
 package ch.heigvd.amt.projectone.presentation;
 
+import ch.heigvd.amt.projectone.DAO.ICoachDAO;
 import ch.heigvd.amt.projectone.DAO.IPlayerDAO;
 import ch.heigvd.amt.projectone.DAO.ITeamDAO;
 import ch.heigvd.amt.projectone.model.Coach;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 
-@WebServlet(name = "DeleteServlet",urlPatterns = {"/deleteTeam","/deletePlayer"})
+@WebServlet(name = "DeleteServlet",urlPatterns = {"/deleteTeam","/deletePlayer","/deleteCoach"})
 public class DeleteServlet extends HttpServlet {
     @EJB
     ITeamDAO td;
@@ -25,23 +26,31 @@ public class DeleteServlet extends HttpServlet {
     @EJB
     IPlayerDAO pd;
 
+    @EJB
+    ICoachDAO cd;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("deletename");
         String path = request.getServletPath();
+        String context = request.getContextPath();
 
         if(path.contains("/deleteTeam")){
             td.deleteById(id);
             response.getWriter().println("team deleted");
-            RequestDispatcher rd = request.getRequestDispatcher("../tableTeamPage/allTeams");
-            rd.forward(request, response);
+            response.sendRedirect(context + "/tableTeamPage/allTeams?currentPage=1");
         }
 
 
         if(path.contains("/deletePlayer")){
             pd.deleteById(Integer.parseInt(id));
             response.getWriter().println("player deleted");
-            RequestDispatcher rd = request.getRequestDispatcher("/tablePlayerPage/myPlayers");
-            rd.forward(request, response);
+            response.sendRedirect(context + "/tablePlayerPage/myPlayers?currentPage=1");
+        }
+
+        if(path.contains("/deleteCoach")){
+            cd.deleteById(id);
+            response.getWriter().println("coach deleted");
+            response.sendRedirect(context + "/tableCoachPage?currentPage=1");
         }
 
         System.out.println(id);

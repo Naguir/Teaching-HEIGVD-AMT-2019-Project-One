@@ -7,7 +7,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+    <title>Football Management</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -36,7 +36,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="purple" data-image="assets/img/background-image2.jpg">
 
     <!--
 
@@ -103,30 +103,9 @@
         <nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
                     <a class="navbar-brand" href="#">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-								<p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul>
-
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="">
@@ -146,29 +125,29 @@
 
 
         <div class="content">
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Light Bootstrap Table Heading</h4>
-                        <p class="card-category">Created using Montserrat Font Family</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="typography-line">
-                            <h1>
-                                Welcome to Football Management
-                            </h1>
-                        </div>
-                        <div class="typography-line">
-                            <p>
-                                This website is created for managing players and coaching
-                            </p>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    <p>Welcome ${coach.firstName} ${coach.lastName} to</p>
+                                    Football Management
+                                </h2>
+                            </div>
+                            <div class="content">
+                                <p>
+                                    This website is created for managing players and coaching
+                                </p>
+                                For more information: https://www.github.com/Naguir/Teaching-HEIGVD-AMT-2019-Project-One
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
 
         <footer class="footer">

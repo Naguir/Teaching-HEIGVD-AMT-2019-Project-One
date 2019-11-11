@@ -24,6 +24,7 @@ public class AddingTeamServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Coach coach = (Coach) request.getSession().getAttribute("coach");
         request.setAttribute("coach", coach);
+        String context = request.getContextPath();
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -41,14 +42,13 @@ public class AddingTeamServlet extends HttpServlet {
         try {
             td.create(t);
             response.getWriter().println("team created");
-            RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/pages/registrationTeam.jsp");
-            rd.forward(request,response);
+            response.sendRedirect(context + "/tableTeamPage/allTeams?currentPage=1");
         } catch (DuplicateKeyException e) {
             e.printStackTrace();
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/pages/registrationTeam.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/registrationTeamPlayer.jsp").forward(request, response);
     }
 }

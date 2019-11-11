@@ -27,7 +27,7 @@ public class AddingPlayerServlet extends HttpServlet {
     ITeamDAO td;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-
+        String context = request.getContextPath();
         String fname =request.getParameter("fname");
         String lname  = request.getParameter("lname");
         String position  =request.getParameter("position");
@@ -47,8 +47,7 @@ public class AddingPlayerServlet extends HttpServlet {
         try {
             pd.create(p);
             response.getWriter().println("player created");
-            RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/pages/registrationTeam.jsp");
-            rd.forward(request,response);
+            response.sendRedirect(context + "/tablePlayerPage/myPlayers?currentPage=1");
         } catch (DuplicateKeyException e) {
             e.printStackTrace();
         }
@@ -58,6 +57,6 @@ public class AddingPlayerServlet extends HttpServlet {
         Coach coach = (Coach) request.getSession().getAttribute("coach");
         request.setAttribute("coach", coach);
         request.setAttribute("teams", td.findMyTeamByCoach(coach.getUsername()));
-        request.getRequestDispatcher("/WEB-INF/pages/registrationTeam.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/registrationTeamPlayer.jsp").forward(request, response);
     }
 }
