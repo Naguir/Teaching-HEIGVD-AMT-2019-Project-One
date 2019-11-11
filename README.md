@@ -23,7 +23,7 @@ To implement this app, we have used the MVC pattern. Our application is splitted
 - Follow [this link](./doc/README_deployment.md) in order to **deploy** the web application on your machine.
 - Follow [this link](./doc/README_usability.md) to know how to use the web application
 - Follow [this link](./doc/README_tests.md) if you want to see **the tests** we've made.
-- Follow [this link](./doc/README_usability.md) to see the actual knows bugs and limitations.
+- Follow [this link](./doc/README_bugs_limitations.md) to see the actual knows bugs and limitations.
 
 
 
