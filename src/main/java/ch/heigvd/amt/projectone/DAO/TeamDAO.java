@@ -1,18 +1,12 @@
 package ch.heigvd.amt.projectone.DAO;
 
-import ch.heigvd.amt.projectone.business.IAuthentification;
-import ch.heigvd.amt.projectone.model.Coach;
 import ch.heigvd.amt.projectone.model.Team;
 
 import javax.annotation.Resource;
 import javax.ejb.DuplicateKeyException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

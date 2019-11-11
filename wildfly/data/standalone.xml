@@ -159,7 +159,7 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:/jdbc/fmDS" pool-name="fmDS" enabled="true" use-ccm = "true">
-                    <connection-url>jdbc:mysql://192.168.99.100:3306/fmDB</connection-url>
+                    <connection-url>jdbc:mysql://192.168.99.100:3306/fmDB?zeroDateTimeBehavior=convertToNull</connection-url>
                     <driver-class>com.mysql.jdbc.Driver</driver-class>
                     <driver>mysql-connector-java-5.1.48.jar_com.mysql.jdbc.Driver_5_1</driver>
                     <security>

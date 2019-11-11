@@ -37,13 +37,14 @@ public class TableServlet extends HttpServlet {
         System.out.println(request.getServletPath());
         String path = request.getServletPath();
         request.setAttribute("coach", coach);
-        int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-        int recordsPerPage = 10;
-        int rows = 0;
-        int nOfPages =0;
+
 
         if(path.contains("/tablePlayerPage/")) {
 
+            int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+            int recordsPerPage = 10;
+            int rows = 0;
+            int nOfPages =0;
 
             List<Player> allPlayers = pd.findPlayers(currentPage,recordsPerPage);
             List<Player> myPlayers = pd.findMyTeamPlayers(currentPage,recordsPerPage,coach);
@@ -72,6 +73,11 @@ public class TableServlet extends HttpServlet {
         }
 
         if(path.contains("/tableTeamPage/")) {
+            int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+            int recordsPerPage = 10;
+            int rows = 0;
+            int nOfPages =0;
+
             List<Team> allTeam = td.findAllTeam(currentPage,recordsPerPage);
             List<Team> myTeam = td.findMyTeam(currentPage,recordsPerPage,coach.getUsername());
 
@@ -98,6 +104,11 @@ public class TableServlet extends HttpServlet {
         }
 
         if(path.equals("/tableCoachPage")) {
+            int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+            int recordsPerPage = 10;
+            int rows = 0;
+            int nOfPages =0;
+
             List<Coach> allCoach = cd.findAllCoach(currentPage,recordsPerPage);
             request.setAttribute("coaches", allCoach);
 
