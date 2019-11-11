@@ -8,17 +8,11 @@ Here we explain the tests we've made. We did different tests, below each tests a
 
 ### **Unit tests**
 
-We've made some unit tests... 
+We've made some unit tests using JUnit test. 
 
-To be completed...
+We've used Mockito to test our Servlet, simple JUnit test for our class.
 
 ### Performance and load tests
-
-We've made some performance and load tests...
-
-To be completed...
-
-### **Automated User Acceptance** tests
 
 To be completed...
 

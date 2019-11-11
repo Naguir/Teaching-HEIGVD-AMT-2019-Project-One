@@ -32,5 +32,17 @@ And here is for simple user :
 
 ### Data (add, delete, update)
 
-To be completed.. 
+In the Coach Profile menu, we can update our profile :
+
+![](./img/coach-update.png)
+
+ My team list will show the team, you're currently coaching :
+
+![](./img/myteam-list.png)
+
+My players list shows the players you have of every team you coach. You can add new player or delete them.
+
+![](./img/myplayers-list.png)
+
+
 
