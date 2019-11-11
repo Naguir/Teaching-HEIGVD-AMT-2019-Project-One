@@ -1,13 +1,9 @@
 package ch.heigvd.amt.projectone.DAO;
 
-import ch.heigvd.amt.projectone.business.IAuthentification;
 import ch.heigvd.amt.projectone.model.Coach;
-import ch.heigvd.amt.projectone.model.Player;
-import ch.heigvd.amt.projectone.model.Team;
 
 import javax.annotation.Resource;
 import javax.ejb.DuplicateKeyException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -76,6 +72,7 @@ public class CoachDAO implements ICoachDAO {
 
     }
 
+
     @Override
     public List<Coach> findAllCoach(int currentPage, int numOfRecords) {
         List<Coach> coaches = new ArrayList<>();
@@ -107,6 +104,7 @@ public class CoachDAO implements ICoachDAO {
             closeConnection(con);
         }
     }
+
 
     public int getNumberOfRows(){
         Connection con = null;

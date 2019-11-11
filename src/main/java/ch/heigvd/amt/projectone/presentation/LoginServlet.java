@@ -4,7 +4,6 @@ package ch.heigvd.amt.projectone.presentation;
 import ch.heigvd.amt.projectone.DAO.ICoachDAO;
 import ch.heigvd.amt.projectone.DAO.LoginDAO;
 import ch.heigvd.amt.projectone.model.Coach;
-
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +25,8 @@ public class LoginServlet extends HttpServlet {
     private ICoachDAO cd;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // permet d'acceder a la page principale dès que nous nous sommes connectés
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();

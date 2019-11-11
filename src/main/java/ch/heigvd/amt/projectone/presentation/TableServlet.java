@@ -6,7 +6,6 @@ import ch.heigvd.amt.projectone.DAO.ITeamDAO;
 import ch.heigvd.amt.projectone.model.Coach;
 import ch.heigvd.amt.projectone.model.Player;
 import ch.heigvd.amt.projectone.model.Team;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +31,9 @@ public class TableServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // affichage dans une liste des joueurs, coach et equipes
+        // on regarde le path pour differencier
+
         Coach coach = (Coach) request.getSession().getAttribute("coach");
 
         System.out.println(request.getServletPath());
@@ -112,7 +114,7 @@ public class TableServlet extends HttpServlet {
             List<Coach> allCoach = cd.findAllCoach(currentPage,recordsPerPage);
             request.setAttribute("coaches", allCoach);
 
-            rows = td.getNumberOfRows();
+            rows = cd.getNumberOfRows();
             nOfPages = rows / recordsPerPage;
             if (nOfPages % recordsPerPage > 0) {
                 nOfPages++;

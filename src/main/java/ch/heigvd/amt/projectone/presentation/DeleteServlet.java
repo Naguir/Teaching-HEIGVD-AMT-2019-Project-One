@@ -3,20 +3,14 @@ package ch.heigvd.amt.projectone.presentation;
 import ch.heigvd.amt.projectone.DAO.ICoachDAO;
 import ch.heigvd.amt.projectone.DAO.IPlayerDAO;
 import ch.heigvd.amt.projectone.DAO.ITeamDAO;
-import ch.heigvd.amt.projectone.model.Coach;
-import ch.heigvd.amt.projectone.model.Team;
-
-import javax.ejb.DuplicateKeyException;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
+
 
 @WebServlet(name = "DeleteServlet",urlPatterns = {"/deleteTeam","/deletePlayer","/deleteCoach"})
 public class DeleteServlet extends HttpServlet {
@@ -30,6 +24,8 @@ public class DeleteServlet extends HttpServlet {
     ICoachDAO cd;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // on regarde d'abord le path pour ensuite pouvoir supprimer soit une equipe, soit un joueur ou soit un coach
+
         String id = request.getParameter("deletename");
         String path = request.getServletPath();
         String context = request.getContextPath();

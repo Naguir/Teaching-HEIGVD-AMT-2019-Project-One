@@ -1,5 +1,4 @@
 package ch.heigvd.amt.projectone.presentation;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +14,9 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        // Check if the user id is stored in session
         if (request.getSession().getAttribute("coach") != null) {
             chain.doFilter(req, resp);
         } else {
-            // The user is not connected, redirect to the login page
             response.sendRedirect(request.getContextPath() + "/loginPage");
         }
     }

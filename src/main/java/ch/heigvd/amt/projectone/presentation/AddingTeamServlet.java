@@ -6,7 +6,6 @@ import ch.heigvd.amt.projectone.model.Team;
 
 import javax.ejb.DuplicateKeyException;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,12 +21,14 @@ public class AddingTeamServlet extends HttpServlet {
     @EJB
     ITeamDAO td;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Ajout d'une team par le coach admin
+
+
         Coach coach = (Coach) request.getSession().getAttribute("coach");
         request.setAttribute("coach", coach);
         String context = request.getContextPath();
 
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         String name =request.getParameter("name");
         Date creationDate  = Date.valueOf(request.getParameter("creationDate"));

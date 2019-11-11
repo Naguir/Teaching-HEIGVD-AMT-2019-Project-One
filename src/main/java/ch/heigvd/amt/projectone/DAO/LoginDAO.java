@@ -1,10 +1,7 @@
 package ch.heigvd.amt.projectone.DAO;
 
-import ch.heigvd.amt.projectone.business.IAuthentification;
 
 import javax.annotation.Resource;
-import javax.ejb.DuplicateKeyException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.Connection;

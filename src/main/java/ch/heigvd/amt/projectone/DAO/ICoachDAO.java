@@ -6,7 +6,18 @@ import java.util.List;
 
 @Local
 public interface ICoachDAO extends IDAO<String, Coach>  {
+    /**
+     *
+     * @param currentPage
+     * @param numOfRecords
+     * @return une liste de tout les coachs se trouvant dans la base de donnée
+     * avec un debut et le nombre ligne.
+     */
     List<Coach> findAllCoach(int currentPage, int numOfRecords);
-    public int getNumberOfRows();
 
+    /**
+     *
+     * @return le nombre de coach au total
+     */
+    public int getNumberOfRows();
 }

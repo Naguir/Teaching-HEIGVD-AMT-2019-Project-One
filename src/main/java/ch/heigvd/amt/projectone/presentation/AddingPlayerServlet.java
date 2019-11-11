@@ -8,15 +8,12 @@ import ch.heigvd.amt.projectone.model.Team;
 
 import javax.ejb.DuplicateKeyException;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 
 
 @WebServlet(name = "AddingPlayerServlet", urlPatterns = {"/addingPlayer"})
@@ -26,6 +23,9 @@ public class AddingPlayerServlet extends HttpServlet {
     @EJB
     ITeamDAO td;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Ajout d'un joueur dans une équipe
+        // l'ajout c est le coach en question qui le fait dans une de ses equipes
+
         response.setContentType("text/html");
         String context = request.getContextPath();
         String fname =request.getParameter("fname");

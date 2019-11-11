@@ -3,12 +3,9 @@ package ch.heigvd.amt.projectone.presentation;
 import ch.heigvd.amt.projectone.DAO.ICoachDAO;
 import ch.heigvd.amt.projectone.DAO.ITeamDAO;
 import ch.heigvd.amt.projectone.model.Coach;
-import ch.heigvd.amt.projectone.model.Player;
-import ch.heigvd.amt.projectone.model.Team;
 
-import javax.ejb.DuplicateKeyException;
+
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +23,7 @@ public class CoachServlet extends HttpServlet {
     private ICoachDAO cd;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Modification du coach
 
         String context = request.getContextPath();
 
@@ -48,6 +46,8 @@ public class CoachServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //On affiche les valeurs du coach dans le profile
+
         Coach coach = (Coach) request.getSession().getAttribute("coach");
         Coach c = cd.findById(coach.getUsername());
         request.setAttribute("coach",c);

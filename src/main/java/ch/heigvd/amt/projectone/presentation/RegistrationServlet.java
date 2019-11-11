@@ -21,6 +21,8 @@ public class RegistrationServlet extends HttpServlet {
     ICoachDAO cd;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // ajoute le coach dans la bdd
+
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
